@@ -1,0 +1,21 @@
+# node modules
+node_modules/
+
+# env files
+.env
+
+# uploads
+uploads/
+
+# macOS junk
+.DS_Store
+.Trashes
+*.zip
+
+# VS Code history
+.vscode/
+
+# Ignore system folders accidentally added
+Pictures/
+Photo Booth Library/
+.Trash/
