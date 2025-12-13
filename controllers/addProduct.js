@@ -34,6 +34,56 @@ exports.addProduct = async (req, res) => {
     }
 };
 
+exports.editProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, description, price, stock, category } = req.body;
+
+        const product = await Product.findByPk(id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        product.name = name;
+        product.description = description;
+        product.price = price;
+        product.stock = stock;
+        product.category = category;
+
+        await product.save();
+
+        return res.status(200).json({
+            message: "Product updated successfully",
+            product,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error updating product" });
+    }
+};
+
+exports.deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const product = await Product.findByPk(id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
+        await product.destroy();
+
+        return res.status(200).json({
+            message: "Product deleted successfully",
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error deleting product" });
+    }
+};
+
 exports.getProducts = async (req, res) => {
     try {
         const products = await Product.findAll();
